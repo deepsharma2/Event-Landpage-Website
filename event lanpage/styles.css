@@ -1,0 +1,590 @@
+/* ============================================
+   CSA XCON - CYBER RESILIENCE THEME
+   Palette: Gunmetal Black | Cyber Purple | Neon Amber
+   ============================================ */
+
+:root {
+    /* Core Palette */
+    --bg-core: #0f0f0f;
+    /* Gunmetal Black */
+    --bg-secondary: rgba(26, 26, 26, 0.85);
+    /* Carbon Grey with opacity */
+    --bg-glass: rgba(26, 26, 26, 0.6);
+
+    /* Accents */
+    --accent-primary: #a020f0;
+    /* Cyber Purple */
+    --accent-glow: #c770ff;
+    /* Electric Violet */
+    --accent-highlight: #ff8c3a;
+    /* Neon Amber */
+
+    /* Text */
+    --text-primary: #f2f2f2;
+    --text-secondary: #b0b0b0;
+    --text-muted: #666666;
+
+    /* Gradients */
+    --grad-main: linear-gradient(135deg, #a020f0 0%, #7000aa 100%);
+    --grad-fire: linear-gradient(135deg, #ff8c3a 0%, #aa4b00 100%);
+    --grad-dark: linear-gradient(180deg, rgba(15, 15, 15, 0) 0%, #0f0f0f 100%);
+
+    /* Effects */
+    --neon-purple: 0 0 10px rgba(160, 32, 240, 0.5), 0 0 20px rgba(160, 32, 240, 0.3);
+    --neon-amber: 0 0 10px rgba(255, 140, 58, 0.5), 0 0 20px rgba(255, 140, 58, 0.3);
+    --glass-border: 1px solid rgba(255, 255, 255, 0.08);
+    --card-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+
+    /* Typography */
+    --font-display: 'Space Grotesk', sans-serif;
+    --font-body: 'Inter', sans-serif;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    background-color: var(--bg-core);
+    color: var(--text-primary);
+    font-family: var(--font-body);
+    line-height: 1.6;
+    overflow-x: hidden;
+    background-image:
+        radial-gradient(circle at 10% 20%, rgba(160, 32, 240, 0.05) 0%, transparent 40%),
+        radial-gradient(circle at 90% 80%, rgba(255, 140, 58, 0.03) 0%, transparent 40%);
+}
+
+/* ============================================
+   NAVIGATION - GLASSMORPHISM
+   ============================================ */
+.navbar {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: rgba(15, 15, 15, 0.85);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(160, 32, 240, 0.2);
+    padding: 1rem 0;
+    transition: all 0.3s ease;
+}
+
+.nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 2rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.nav-logo {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.5rem;
+    letter-spacing: -0.5px;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.logo-img {
+    height: 40px;
+    width: auto;
+}
+
+.logo-text {
+    background: linear-gradient(to right, #fff, var(--accent-glow));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 20px rgba(160, 32, 240, 0.3);
+}
+
+.nav-menu {
+    display: flex;
+    list-style: none;
+    gap: 2.5rem;
+}
+
+.nav-link {
+    color: var(--text-secondary);
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.nav-link::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: var(--accent-highlight);
+    transition: width 0.3s ease;
+    box-shadow: 0 0 8px var(--accent-highlight);
+}
+
+.nav-link:hover,
+.nav-link:active,
+.nav-link.active {
+    color: var(--text-primary);
+}
+
+.nav-link:hover::after {
+    width: 100%;
+}
+
+/* ============================================
+   HERO SECTION - CYBER MESH & BACKGROUND
+   ============================================ */
+.hero {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+    padding-top: 80px;
+}
+
+/* Conference Image + Gradient Overlay */
+/* Conference Image + Gradient Overlay */
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* Dark gradient overlay + Conference Image */
+    background:
+        linear-gradient(to bottom, rgba(15, 15, 15, 0.7) 0%, rgba(160, 32, 240, 0.2) 60%, var(--bg-core) 100%),
+        url('images/background.png');
+    background-size: cover;
+    background-position: center;
+    /* Ensuring image scrolls with the section (default behavior, but explicit here for clarity if needed, though default is scroll) */
+    background-attachment: scroll;
+    z-index: 0;
+    opacity: 0.6;
+}
+
+/* Moving Grid Animation (Overlay) */
+.hero::after {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background:
+        linear-gradient(transparent 0%, rgba(160, 32, 240, 0.1) 2%, transparent 3%),
+        linear-gradient(90deg, transparent 0%, rgba(160, 32, 240, 0.1) 2%, transparent 3%);
+    background-size: 50px 50px;
+    transform: perspective(500px) rotateX(60deg);
+    animation: gridMove 20s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+}
+
+@keyframes gridMove {
+    0% {
+        transform: perspective(500px) rotateX(60deg) translateY(0);
+    }
+
+    100% {
+        transform: perspective(500px) rotateX(60deg) translateY(50px);
+    }
+}
+
+.hero-content {
+    text-align: center;
+    max-width: 900px;
+    z-index: 2;
+    padding: 2rem;
+    position: relative;
+}
+
+.hero-badge {
+    display: inline-block;
+    padding: 0.5rem 1.5rem;
+    border: 1px solid var(--accent-highlight);
+    color: var(--accent-highlight);
+    border-radius: 2px;
+    font-family: var(--font-display);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.8rem;
+    margin-bottom: 2rem;
+    box-shadow: var(--neon-amber);
+    background: rgba(255, 140, 58, 0.05);
+}
+
+.hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6vw, 5rem);
+    font-weight: 800;
+    line-height: 1.1;
+    margin-bottom: 1.5rem;
+    background: linear-gradient(135deg, white 40%, var(--accent-glow) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    text-shadow: 0 0 30px rgba(160, 32, 240, 0.3);
+}
+
+.hero-subtitle {
+    font-size: 1.5rem;
+    color: var(--text-secondary);
+    margin-bottom: 2rem;
+    font-weight: 300;
+}
+
+.hero-buttons {
+    display: flex;
+    justify-content: center;
+    gap: 1.5rem;
+    margin-bottom: 4rem;
+}
+
+.btn {
+    padding: 1rem 2.5rem;
+    font-family: var(--font-display);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+    clip-path: polygon(10px 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%, 0 10px);
+}
+
+.btn-primary {
+    background: var(--accent-primary);
+    color: white;
+    border: 1px solid var(--accent-primary);
+    box-shadow: var(--neon-purple);
+}
+
+.btn-primary:hover {
+    background: var(--accent-glow);
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(160, 32, 240, 0.6);
+}
+
+.btn-secondary {
+    background: transparent;
+    color: var(--text-primary);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.btn-secondary:hover {
+    border-color: var(--accent-highlight);
+    color: var(--accent-highlight);
+    box-shadow: var(--neon-amber);
+}
+
+.hero-stats {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 2rem;
+    max-width: 600px;
+    margin: 0 auto;
+}
+
+.stat-item {
+    text-align: center;
+}
+
+.stat-number {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    font-weight: 700;
+    color: var(--accent-highlight);
+    text-shadow: var(--neon-amber);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+}
+
+/* ============================================
+   SECTIONS - GENERAL
+   ============================================ */
+section {
+    padding: 6rem 0;
+    position: relative;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 2rem;
+}
+
+.section-header {
+    margin-bottom: 4rem;
+    position: relative;
+    padding-left: 1.5rem;
+    border-left: 3px solid var(--accent-primary);
+}
+
+.section-badge {
+    color: var(--accent-highlight);
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-size: 0.85rem;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 0.5rem;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: 2.5rem;
+    color: var(--text-primary);
+    margin-bottom: 1rem;
+}
+
+/* ============================================
+   ABOUT XCON - CARDS
+   ============================================ */
+.about-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 2rem;
+}
+
+.card {
+    background: var(--bg-secondary);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 2.5rem;
+    position: relative;
+    transition: all 0.4s ease;
+    backdrop-filter: blur(10px);
+    overflow: hidden;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent-primary);
+    box-shadow: var(--neon-purple);
+}
+
+.card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    right: 0;
+    width: 60px;
+    height: 60px;
+    background: linear-gradient(135deg, transparent 50%, rgba(160, 32, 240, 0.1) 50%);
+}
+
+.card-icon {
+    font-size: 2rem;
+    color: var(--accent-highlight);
+    margin-bottom: 1.5rem;
+    display: inline-block;
+    padding: 1rem;
+    background: rgba(255, 140, 58, 0.05);
+    border-radius: 4px;
+}
+
+.card-title {
+    font-family: var(--font-display);
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.card-desc {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+    padding-top: 1rem;
+    margin-top: 1rem;
+}
+
+/* ============================================
+   ABOUT CSA - SPLIT LAYOUT
+   ============================================ */
+.csa-layout {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    align-items: center;
+}
+
+.csa-text p {
+    margin-bottom: 1.5rem;
+    color: var(--text-secondary);
+    font-size: 1.1rem;
+}
+
+.csa-features {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.5rem;
+}
+
+.feature-box {
+    background: rgba(255, 255, 255, 0.02);
+    padding: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: 0.3s;
+}
+
+.feature-box:hover {
+    background: rgba(160, 32, 240, 0.05);
+    border-color: var(--accent-primary);
+}
+
+.feature-box h4 {
+    color: var(--accent-glow);
+    margin-bottom: 0.5rem;
+    font-family: var(--font-display);
+}
+
+/* ============================================
+   HIGHLIGHTS - NEWS GRID
+   ============================================ */
+.highlights-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+    gap: 20px;
+}
+
+.news-card {
+    background: var(--bg-secondary);
+    border-bottom: 2px solid var(--accent-primary);
+    padding: 0;
+    backdrop-filter: blur(10px);
+    transition: 0.3s;
+}
+
+.news-card:hover {
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+    transform: scale(1.02);
+}
+
+.news-header {
+    background: rgba(160, 32, 240, 0.1);
+    padding: 1.5rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.news-number {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: var(--accent-highlight);
+    opacity: 0.8;
+}
+
+.news-body {
+    padding: 2rem;
+}
+
+.news-title {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    margin-bottom: 1rem;
+    color: white;
+}
+
+.news-text {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+}
+
+/* ============================================
+   FOOTER - PREMIUM
+   ============================================ */
+.footer {
+    background: transparent;
+    backdrop-filter: blur(5px);
+    border-top: 1px solid rgba(160, 32, 240, 0.2);
+    padding: 4rem 0 2rem;
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr;
+    gap: 3rem;
+    margin-bottom: 3rem;
+}
+
+.footer-col h3 {
+    color: white;
+    font-family: var(--font-display);
+    margin-bottom: 1.5rem;
+}
+
+.footer-col p {
+    color: var(--text-muted);
+}
+
+.footer-links {
+    list-style: none;
+}
+
+.footer-links li {
+    margin-bottom: 0.8rem;
+}
+
+.footer-links a {
+    color: var(--text-secondary);
+    text-decoration: none;
+    transition: 0.3s;
+}
+
+.footer-links a:hover {
+    color: var(--accent-highlight);
+    padding-left: 5px;
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 2rem;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+    .csa-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-title {
+        font-size: 3rem;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+    }
+
+    .nav-menu {
+        display: none;
+    }
+
+    /* Add hamburger logic later */
+}
