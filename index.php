@@ -1,0 +1,286 @@
+<?php
+require_once 'cms/config.php';
+
+try {
+    // Fetch data (keep existing logic)
+    $stmt = $pdo->query("SELECT * FROM site_settings");
+    $settings = [];
+    while ($row = $stmt->fetch()) {
+        $settings[$row['setting_key']] = $row['setting_value'];
+    }
+
+    $navStmt = $pdo->query("SELECT * FROM navigation ORDER BY position ASC");
+    $navItems = $navStmt->fetchAll();
+
+    $heroStmt = $pdo->query("SELECT * FROM hero_section LIMIT 1");
+    $hero = $heroStmt->fetch(); // Fallbacks managed in previous step
+
+    $statsStmt = $pdo->query("SELECT * FROM hero_stats ORDER BY position ASC");
+    $stats = $statsStmt->fetchAll();
+
+    $highlightsStmt = $pdo->query("SELECT * FROM highlights ORDER BY position ASC");
+    $highlights = $highlightsStmt->fetchAll();
+
+} catch (PDOException $e) {
+    // If DB fails, use static fallback for now (to allow Python server preview if DB not exists)
+    $settings = ['site_name' => 'CSA XCON', 'site_tagline' => 'Cyber Resilience'];
+    $hero = [
+        'title' => 'CSA XCON', 
+        'subtitle' => 'Pioneering Cyber Resilience', 
+        'badge_text' => 'MARCH 11-14, 2025',
+        'description' => 'Join 1000+ cybersecurity professionals at Uttarakhand\'s first major international cybersecurity conference in a decade.',
+        'primary_button_text' => 'Discover More',
+        'primary_button_link' => '#about-xcon',
+        'secondary_button_text' => 'View Highlights',
+        'secondary_button_link' => '#highlights'
+    ];
+    $stats = [];
+    $highlights = []; 
+    // Usually wouldn't do this in prod, but helps for the python server preview context
+}
+?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSA XCON - Cyber Resilience</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <span class="logo-text">CSA XCON</span>
+            </div>
+            <ul class="nav-menu">
+                <li><a href="#home" class="nav-link active">Home</a></li>
+                <li><a href="#about-xcon" class="nav-link">About XCON</a></li>
+                <li><a href="#about-csa" class="nav-link">About CSA</a></li>
+                <li><a href="#highlights" class="nav-link">Highlights</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <div class="hero-badge"><?php echo htmlspecialchars($hero['badge_text'] ?? 'MARCH 11-14, 2025'); ?></div>
+            <h1 class="hero-title"><?php echo htmlspecialchars($hero['title'] ?? 'CSA XCON'); ?></h1>
+            <p class="hero-subtitle"><?php echo htmlspecialchars($hero['subtitle'] ?? 'Pioneering Cyber Resilience'); ?></p>
+            
+            <div class="hero-buttons">
+                <a href="#about-xcon" class="btn btn-primary">Discover More</a>
+                <a href="#highlights" class="btn btn-secondary">Highlights</a>
+            </div>
+
+            <div class="hero-stats">
+                <div class="stat-item">
+                    <div class="stat-number">1000+</div>
+                    <div class="stat-label">Attendees</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">4</div>
+                    <div class="stat-label">Days</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">10+</div>
+                    <div class="stat-label">Years</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About XCON -->
+    <section id="about-xcon">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">The Conference</span>
+                <h2 class="section-title">About XCON</h2>
+            </div>
+            
+            <div class="about-grid">
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-map-marker-alt"></i></div>
+                    <h3 class="card-title">Venue</h3>
+                    <div class="card-desc">
+                        Himalayan Cultural Center<br>Dehradun, Uttarakhand
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-users"></i></div>
+                    <h3 class="card-title">Attendance</h3>
+                    <div class="card-desc">
+                        1000+ cybersecurity professionals, academicians, and students
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-icon"><i class="fas fa-calendar-alt"></i></div>
+                    <h3 class="card-title">Dates</h3>
+                    <div class="card-desc">
+                        <strong>March 11-12:</strong> Hackathons &amp; Training<br>
+                        <strong>March 13-14:</strong> Conference &amp; Prize Distribution
+                    </div>
+                </div>
+            </div>
+            
+            <div style="margin-top: 3rem; text-align: center; color: var(--text-secondary); max-width: 800px; margin-left: auto; margin-right: auto; padding: 2rem; border: 1px solid rgba(160,32,240,0.2); background: rgba(160,32,240,0.05);">
+                First major international cybersecurity conference in Uttarakhand in 10 years, emphasizing the region’s dedication to cyber resilience.
+            </div>
+        </div>
+    </section>
+
+    <!-- About CSA -->
+    <section id="about-csa" style="background: #0b0b0b;">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Organizer</span>
+                <h2 class="section-title">About CSA</h2>
+            </div>
+            
+            <div class="csa-layout">
+                <div class="csa-text">
+                    <p>At <strong>CloudSecureAlliance</strong>, we bring together top-tier professionals dedicated to pioneering digital defense and safeguarding information.</p>
+                    <p>Our community thrives on exchanging bold ideas around risk management, cyber resilience, and regulatory compliance, driving innovation that matters. We empower organizations to navigate the complex cyber landscape with actionable strategies.</p>
+                    <p>Together, we stay ahead of evolving threats, securing the future of digital trust and resilience.</p>
+                </div>
+                <div class="csa-features">
+                    <div class="feature-box">
+                        <h4>Innovation</h4>
+                        <p>Driving bold ideas in risk management</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Collaboration</h4>
+                        <p>Building a global community</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Resilience</h4>
+                        <p>Staying ahead of threats</p>
+                    </div>
+                    <div class="feature-box">
+                        <h4>Defense</h4>
+                        <p>Pioneering security strategies</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Highlights -->
+    <section id="highlights">
+        <div class="container">
+            <div class="section-header">
+                <span class="section-badge">Experience</span>
+                <h2 class="section-title">Event Highlights</h2>
+            </div>
+            
+            <div class="highlights-grid">
+                <div class="news-card">
+                    <div class="news-header">
+                        <div class="news-number">01</div>
+                        <i class="fas fa-microphone" style="color: var(--accent-glow)"></i>
+                    </div>
+                    <div class="news-body">
+                        <h3 class="news-title">Keynotes &amp; Speakers</h3>
+                        <p class="news-text">Global leaders and innovators on AI disruption, cloud trust, and human-automation coexistence.</p>
+                    </div>
+                </div>
+                
+                <div class="news-card">
+                    <div class="news-header">
+                        <div class="news-number">02</div>
+                        <i class="fas fa-chalkboard-teacher" style="color: var(--accent-glow)"></i>
+                    </div>
+                    <div class="news-body">
+                        <h3 class="news-title">Panels &amp; Workshops</h3>
+                        <p class="news-text">Technical sessions focused on real-world cyber risks and live demos.</p>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-header">
+                        <div class="news-number">03</div>
+                        <i class="fas fa-network-wired" style="color: var(--accent-glow)"></i>
+                    </div>
+                    <div class="news-body">
+                        <h3 class="news-title">Networking</h3>
+                        <p class="news-text">Opportunities to connect with professionals, researchers, and government stakeholders.</p>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-header">
+                        <div class="news-number">04</div>
+                        <i class="fas fa-laptop-code" style="color: var(--accent-glow)"></i>
+                    </div>
+                    <div class="news-body">
+                        <h3 class="news-title">Industry Innovation</h3>
+                        <p class="news-text">Showcase of latest tools, frameworks, and tech solutions.</p>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-header">
+                        <div class="news-number">05</div>
+                        <i class="fas fa-trophy" style="color: var(--accent-glow)"></i>
+                    </div>
+                    <div class="news-body">
+                        <h3 class="news-title">Hackathons</h3>
+                        <p class="news-text">Competitive events tackling realistic cybersecurity challenges.</p>
+                    </div>
+                </div>
+
+                <div class="news-card">
+                    <div class="news-header">
+                        <div class="news-number">06</div>
+                        <i class="fas fa-tools" style="color: var(--accent-glow)"></i>
+                    </div>
+                    <div class="news-body">
+                        <h3 class="news-title">Workshops</h3>
+                        <p class="news-text">Hands-on training with cloud security, AI security, Zero Trust, incident response, and threat intelligence.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-col">
+                    <h3>CSA XCON</h3>
+                    <p>First major international cybersecurity conference in Uttarakhand in 10 years.</p>
+                </div>
+                <div class="footer-col">
+                    <h3>Quick Links</h3>
+                    <ul class="footer-links">
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about-xcon">About XCON</a></li>
+                        <li><a href="#about-csa">About CSA</a></li>
+                        <li><a href="#highlights">Highlights</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h3>Contact</h3>
+                    <p>info@csaxcon.com</p>
+                    <div style="margin-top: 1rem; display: flex; gap: 1rem;">
+                        <a href="#" style="color: var(--text-secondary)"><i class="fab fa-twitter"></i></a>
+                        <a href="#" style="color: var(--text-secondary)"><i class="fab fa-linkedin"></i></a>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                &copy; 2025 CSA XCON. Organized by CloudSecureAlliance.
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
