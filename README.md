@@ -1,4 +1,4 @@
-# CSA XCON Website - README
+# Website - README
 
 ## 🎯 Project Overview
 
